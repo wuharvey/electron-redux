@@ -27,7 +27,8 @@
   },
   "scripts": {
     "test": "lerna run test",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "bootstrap": "yarn --force && lerna bootstrap"
   },
   "workspaces": [
     "packages/*"
