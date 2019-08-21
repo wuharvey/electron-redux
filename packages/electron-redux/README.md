@@ -170,4 +170,5 @@ Special thanks go out to:
 
 - [Charlie Hess](https://github.com/CharlieHess)
 - [Roman Paradeev](https://github.com/sameoldmadness)
+- [Kevin Sjöberg](https://github.com/KevinSjoberg)
 - Anyone who has contributed by [asking questions & raising issues](https://github.com/hardchor/electron-redux/issues?q=is%3Aissue+is%3Aclosed) 🚀
