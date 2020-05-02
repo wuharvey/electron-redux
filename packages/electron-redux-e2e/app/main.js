@@ -10,7 +10,7 @@ const {
 } = require('electron-redux');
 const reducers = require('./reducers');
 
-const store = createStore(reducers, 0, applyMiddleware(triggerAlias, forwardToRenderer));
+const store = createStore(reducers, applyMiddleware(triggerAlias, forwardToRenderer));
 
 replayActionMain(store);
 

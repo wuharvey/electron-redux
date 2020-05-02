@@ -15,7 +15,8 @@ replayActionRenderer(store);
 const valueEl = document.getElementById('value');
 
 function render() {
-  valueEl.innerHTML = store.getState().toString();
+  console.log(store.getState());
+  valueEl.innerHTML = store.getState().count.toString();
 }
 
 render();

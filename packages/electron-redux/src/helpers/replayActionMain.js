@@ -1,4 +1,19 @@
-const { ipcMain } = typeof window != 'undefined' ? window.require('electron') : require('electron');
+const { ipcMain } = typeof window !== 'undefined' ? window.require('electron') : require('electron');
+
+const preserve = (key, value) => {
+  if (value instanceof Map) {
+    const obj = Object.fromEntries(value);
+    obj.__hydrate_type = '__hydrate_map';
+    return obj;
+  } if (value instanceof Set) {
+    return {
+      __hydrate_type: '__hydrate_set',
+      items: Array.from(value),
+    };
+  }
+
+  return value;
+};
 
 export default function replayActionMain(store) {
   /**
@@ -8,7 +23,7 @@ export default function replayActionMain(store) {
    *
    * Refer to https://github.com/electron/electron/blob/master/docs/api/remote.md#remote-objects
    */
-  global.getReduxState = () => JSON.stringify(store.getState());
+  global.getReduxState = () => JSON.stringify(store.getState(), preserve);
 
   ipcMain.on('redux-action', (event, payload) => {
     store.dispatch(payload);

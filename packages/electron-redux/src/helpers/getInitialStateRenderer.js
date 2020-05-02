@@ -1,4 +1,14 @@
-const { remote } = typeof window != 'undefined' ? window.require('electron') : require('electron');
+const { remote } = typeof window !== 'undefined' ? window.require('electron') : require('electron');
+
+const hydrate = (key, value) => {
+  if (value?.__hydrate_type === '__hydrate_map') {
+    return new Map(Object.entries(value).filter(([key]) => key !== '__hydrate_type'));
+  } if (value?.__hydrate_type === '__hydrate_set') {
+    return new Set(value.items);
+  }
+
+  return value;
+};
 
 export default function getInitialStateRenderer() {
   const getReduxState = remote.getGlobal('getReduxState');
@@ -7,5 +17,5 @@ export default function getInitialStateRenderer() {
       'Could not find reduxState global in main process, did you forget to call replayActionMain?',
     );
   }
-  return JSON.parse(getReduxState());
+  return JSON.parse(getReduxState(), hydrate);
 }
