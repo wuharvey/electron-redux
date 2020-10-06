@@ -1,12 +1,12 @@
 {
-	"name": "@mckayla/electron-redux",
-	"version": "2.0.2",
+	"name": "@wuharvey/electron-redux",
+	"version": "2.0.3",
 	"license": "MIT",
 	"types": "dist/index.d.ts",
 	"description": "Make sure all your stores are on the same page",
-	"author": "McKayla Washburn",
-	"repository": "https://github.com/partheseas/electron-redux",
-	"bugs": "https://github.com/partheseas/electron-redux/issues",
+	"author": "Harvey Wu",
+	"repository": "https://github.com/wuharvey/electron-redux",
+	"bugs": "https://github.com/partheseas/wuharvey/issues",
 	"files": [
 		"dist/**"
 	],
