@@ -1,4 +1,3 @@
-import { ipcRenderer } from "electron";
 import {
 	Action,
 	applyMiddleware,
@@ -18,14 +17,9 @@ import {
 export async function getRendererState(callback: (state: unknown) => void) {
 	// Electron will throw an error if there isn't a handler for the channel.
 	// We catch it so that we can throw a more useful error
-	const state = await ipcRenderer
-		.invoke("mckayla.electron-redux.FETCH_STATE")
-		.catch((error) => {
-			console.error(error);
-			throw new Error(
-				"No Redux store found in main process. Did you use the syncMain enhancer?",
-			);
-		});
+
+	//@ts-ignore
+	const state = window.electron_redux.getState()
 
 	// We do some fancy hydration on certain types like Map and Set.
 	// See also `freeze`
@@ -64,13 +58,17 @@ const wrapReducer = (reducer: Reducer) => <S, A extends Action>(
 
 const middleware: Middleware = (store) => {
 	// When receiving an action from main
-	ipcRenderer.on("mckayla.electron-redux.ACTION", (_, action: Action) => {
-		store.dispatch(stopForwarding(action));
-	});
+	// ipcRenderer.on("mckayla.electron-redux.ACTION", (_, action: Action) => {
+	// 	store.dispatch(stopForwarding(action));
+	// });
+	//@ts-ignore
+	window.electron_redux.replayInRenderer(store)
 
 	return (next) => (action) => {
 		if (validateAction(action)) {
-			ipcRenderer.send("mckayla.electron-redux.ACTION", action);
+			// ipcRenderer.send("mckayla.electron-redux.ACTION", action);
+			//@ts-ignore
+			window.electron_redux.sendFromRenderer(action)
 		}
 
 		return next(action);

@@ -62,3 +62,5 @@ export const syncMain: StoreEnhancer = (createStore: StoreCreator) => {
 };
 
 export const syncMainMiddleware = middleware;
+
+console.log("ABCABC - ", middleware, typeof(middleware))
