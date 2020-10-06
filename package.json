@@ -1,8 +1,9 @@
 {
-	"name": "@wuharvey/electron-redux",
+	"name": "@harveyw/electron-redux",
 	"version": "2.0.3",
 	"license": "MIT",
 	"types": "dist/index.d.ts",
+        "main": "dist/index.js",
 	"description": "Make sure all your stores are on the same page",
 	"author": "Harvey Wu",
 	"repository": "https://github.com/wuharvey/electron-redux",
