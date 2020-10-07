@@ -28,7 +28,6 @@ const middleware: Middleware = (store) => {
 		const localAction = stopForwarding(action);
 		store.dispatch(localAction);
 		console.log("Dispatched ", localAction, "in main")
-		store.dispatch({type: "TEST"})
 
 		// Forward it to all of the other renderers
 		webContents.getAllWebContents().forEach((contents) => {
@@ -62,5 +61,3 @@ export const syncMain: StoreEnhancer = (createStore: StoreCreator) => {
 };
 
 export const syncMainMiddleware = middleware;
-
-console.log("ABCABC - ", middleware, typeof(middleware))
