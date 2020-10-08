@@ -24,25 +24,20 @@ const middleware: Middleware = (store) => {
 
 	// When receiving an action from a renderer
 	ipcMain.on("mckayla.electron-redux.ACTION", (event, action: Action) => {
-		console.log("Received action:", action, "in main.")
 		const localAction = stopForwarding(action);
 		store.dispatch(localAction);
-		console.log("Dispatched ", localAction, "in main")
 
 		// Forward it to all of the other renderers
 		webContents.getAllWebContents().forEach((contents) => {
 			// Ignore the renderer that sent the action
 			if (contents.id !== event.sender.id) {
-				console.log("Forwarding to: ", contents.id)
 				contents.send("mckayla.electron-redux.ACTION", localAction);
 			}
 		});
 	});
 
 	return (next) => (action) => {
-		console.log("Electron-redux middleware received: ", action)
 		if (validateAction(action)) {
-			console.log(action, "Action validated.")
 			webContents.getAllWebContents().forEach((contents) => {
 				contents.send("mckayla.electron-redux.ACTION", action);
 			});

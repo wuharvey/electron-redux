@@ -10,7 +10,6 @@ import {
 import {
 	hydrate,
 	preventDoubleInitialization,
-	stopForwarding,
 	validateAction,
 } from "../helpers";
 
@@ -19,8 +18,7 @@ export async function getRendererState(callback: (state: unknown) => void) {
 	// We catch it so that we can throw a more useful error
 
 	//@ts-ignore
-	const state = window.electron_redux.getState()
-
+	const state = await window.electron_redux.getState()
 	// We do some fancy hydration on certain types like Map and Set.
 	// See also `freeze`
 	callback(JSON.parse(state, hydrate));
